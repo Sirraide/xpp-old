@@ -10,28 +10,6 @@ if (process.argv.length < 3) {
 let file = fs.readFileSync(process.argv[2]).toString()
 let inject = (x) => file += x
 global.inject = inject
-let F = {
-    proof(text, intercolspace, linums) {
-        let lines = text.trim().split('\n').map(x => x.trim().split('&').map(x =>
-            x.trim()))
-        let counter = 0
-        const nextcounter = linums
-            ? () => linums.shift()
-            : () => ++counter
-        let tabular = `\\medskip\\noindent\\begin{tabularx}{\\hsize}{@{}l>{$}X<{$}${intercolspace ? `@{${intercolspace ??= '\\hskip0pt'}}` : ''}r}`
-        for (let line of lines) {
-            let nonum = false
-            if (line[0].startsWith('[NONUMBER]')) {
-                line[0] = line[0].slice(10)
-                nonum = true
-            }
-            tabular += `\n\t${nonum ? line[0].slice(0, 1) : nextcounter() + '.'}&${line[0].slice(1)}&${line[1]}\\\\` // $
-        }
-
-        tabular += '\n\\end{tabularx}\\medskip'
-        inject(tabular)
-}
-}
 global.F = F
 
 let prefix = '%#'
