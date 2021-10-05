@@ -10,7 +10,7 @@ if (process.argv.length < 3) {
 let file = fs.readFileSync(process.argv[2]).toString()
 let inject = (x) => file += x
 global.inject = inject
-global.F = F
+global.F = {}
 
 let prefix = '%#'
 let idx = process.argv.findIndex(x => x === '--prefix')
