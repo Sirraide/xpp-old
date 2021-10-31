@@ -47,8 +47,8 @@ for (;;) {
 
         buf = file.slice(start, end)
         end += 8 + prefix.length /// strlen("eval end") = 8
-    } else if (buf.includes(prefix + 'eval defmacro')) {
-        buf = buf.slice(prefix.length + 'eval defmacro'.length)
+    } else if (buf.includes(prefix + 'eval defmacro ')) {
+        buf = buf.slice(prefix.length + 'eval defmacro '.length)
         defmacro = true
     } else buf = buf.slice(prefix.length + 'eval'.length)
 
@@ -62,7 +62,7 @@ for (;;) {
         else F[funcname] = new Function(buf)
     } else if (defmacro) {
         buf = buf.trim().split(' ')
-        let macroname = buf[0]
+        let macroname = buf[0].trim()
         let macroval = buf[1].replaceAll('<SP>', ' ')
         tail = tail.replaceAll(macroname, macroval)
     } else {
