@@ -73,4 +73,8 @@ for (;;) {
     last = pos
 }
 
-console.log(file)
+if (process.argv.includes("--kern-en-dashes")) {
+	file = file.replaceAll(/(?<=\d)(–|--)(?=\d)/g, "\\kern1pt--\\kern1pt")
+}
+
+process.stdout.write(file)
